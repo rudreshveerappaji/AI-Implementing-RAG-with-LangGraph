@@ -1,1 +1,6 @@
-This is a sample document
+LangGraph is a framework for building stateful, multi-step AI applications.
+
+Retrieval-Augmented Generation (RAG) combines document retrieval with
+language model generation to produce accurate and grounded responses.
+
+Graph-based systems allow conditional routing and better debugging.
