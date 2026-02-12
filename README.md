@@ -67,42 +67,6 @@ This architecture allows flexible extension such as:
 
 ---
 
-```mermaid
-flowchart TD
-
-    %% User Input
-    A[User Question] --> B[LangGraph App.invoke()]
-
-    %% Graph Entry
-    B --> C[Retrieve Node]
-
-    %% Retrieval Layer
-    C --> C1[load_vector_store()]
-    C1 --> C2[Chroma Vector DB]
-    C2 --> C3[Similarity Search]
-    C3 --> D[Retrieved Documents]
-
-    %% Grading Layer
-    D --> E[Grade Node]
-    E --> E1[LLM Relevance Check]
-    E1 --> F{Is Relevant?}
-
-    %% Conditional Routing
-    F -- Yes --> G[Generate Node]
-    F -- No --> H[Fallback Node]
-
-    %% Generation Layer
-    G --> G1[Build Prompt with Context]
-    G1 --> G2[LLM Answer Generation]
-    G2 --> I[Final Answer]
-
-    %% Fallback
-    H --> I
-
-    %% Output
-    I --> J[Return Response to User]
-```
-
 ## 📂 Project Structure
 
 ```
@@ -258,6 +222,51 @@ Defines the LangGraph workflow:
 CLI entry point for interacting with the RAG system.
 
 ---
+
+flowchart LR
+    User --> LangGraph
+    LangGraph --> Retriever
+    Retriever --> VectorDB[(Chroma DB)]
+    Retriever --> Grader
+    Grader -->|Relevant| Generator
+    Grader -->|Not Relevant| Fallback
+    Generator --> User
+    Fallback --> User
+```
+Entry Point
+
+1️⃣ main.py calls:
+'''
+app.invoke({"question": question})
+'''
+- This enters the LangGraph workflow.
+
+2️⃣ Retrieve Node (retriever.py)
+- Loads Chroma vector store
+- Performs similarity search
+- Returns top-k relevant documents
+
+3️⃣ Grade Node (grader.py)
+- Uses LLM to check:
+'''
+Are these documents actually relevant?
+'''
+- Returns boolean
+
+4️⃣ Conditional Edge (LangGraph Feature)
+'''
+workflow.add_conditional_edges(...)
+'''
+- If relevant → go to generate
+- If not → go to fallback
+
+5️⃣ Generate Node (generator.py)
+- Builds prompt using retrieved context
+- Sends to LLM
+- Produces grounded answer
+
+6️⃣ Fallback Node
+- Returns safe message if retrieval is poor.
 
 ## 🛠 How to Extend This Project
 
