@@ -256,7 +256,7 @@ Are these documents actually relevant?
 '''
 - Returns boolean
 
-4️⃣ Conditional Edge (LangGraph Feature)
+4️⃣ Conditional Edges / workflows - LangGraph Feature (graph.py)
 '''
 workflow.add_conditional_edges(...)
 '''
