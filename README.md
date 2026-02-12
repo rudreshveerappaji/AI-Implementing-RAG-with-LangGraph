@@ -67,6 +67,42 @@ This architecture allows flexible extension such as:
 
 ---
 
+```mermaid
+flowchart TD
+
+    %% User Input
+    A[User Question] --> B[LangGraph App.invoke()]
+
+    %% Graph Entry
+    B --> C[Retrieve Node]
+
+    %% Retrieval Layer
+    C --> C1[load_vector_store()]
+    C1 --> C2[Chroma Vector DB]
+    C2 --> C3[Similarity Search]
+    C3 --> D[Retrieved Documents]
+
+    %% Grading Layer
+    D --> E[Grade Node]
+    E --> E1[LLM Relevance Check]
+    E1 --> F{Is Relevant?}
+
+    %% Conditional Routing
+    F -- Yes --> G[Generate Node]
+    F -- No --> H[Fallback Node]
+
+    %% Generation Layer
+    G --> G1[Build Prompt with Context]
+    G1 --> G2[LLM Answer Generation]
+    G2 --> I[Final Answer]
+
+    %% Fallback
+    H --> I
+
+    %% Output
+    I --> J[Return Response to User]
+```
+
 ## 📂 Project Structure
 
 ```
