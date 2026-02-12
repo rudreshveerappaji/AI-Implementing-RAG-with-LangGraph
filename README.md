@@ -1,6 +1,6 @@
 # Implementing RAG withLangGraph
 
-## Implementing RAG with LangGraph with simple ready to use example, for educational purposes.
+### Implementing RAG with LangGraph with simple, ready to use examples, for educational purposes.
 
 ## 📌 Description
 
