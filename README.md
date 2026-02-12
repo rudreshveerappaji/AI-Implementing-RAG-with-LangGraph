@@ -223,6 +223,7 @@ CLI entry point for interacting with the RAG system.
 
 ---
 
+```
 flowchart LR
     User --> LangGraph
     LangGraph --> Retriever
@@ -233,6 +234,8 @@ flowchart LR
     Generator --> User
     Fallback --> User
 ```
+---
+
 Entry Point
 
 1️⃣ main.py calls:
