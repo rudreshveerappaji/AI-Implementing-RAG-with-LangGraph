@@ -3,6 +3,7 @@
 
 ## Project Structure
 '''
+
 implementing-rag-with-langgraph/
 │
 ├── app/
@@ -21,4 +22,5 @@ implementing-rag-with-langgraph/
 ├── requirements.txt
 ├── .env.example
 └── README.md
+
 '''
